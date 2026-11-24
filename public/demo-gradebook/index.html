@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Grades — Demo gradebook (Skyward layout) · OnTrack</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; background: #f4f5f7; color: #222; }
+    .banner { background: #6C63FF; color: #fff; padding: 14px 20px; font-size: 14px; line-height: 1.5; }
+    .banner b { font-weight: 800; }
+    main { max-width: 980px; margin: 24px auto; padding: 0 16px; }
+    h2 { font-size: 18px; margin: 0 0 4px; } h3 { font-size: 13px; color: #666; margin: 0 0 12px; font-weight: 600; }
+    .grid { background: #fff; border: 1px solid #ddd; border-radius: 8px; overflow-x: auto; }
+    table { border-collapse: collapse; table-layout: fixed; width: 864px; font-size: 13px; }
+    th, td { padding: 8px 10px; border-bottom: 1px solid #eee; text-align: center; white-space: nowrap; }
+    th:first-child, td:first-child { text-align: left; white-space: normal; }
+    th:last-child { padding: 0; border: 0; }
+    th { background: #fafafa; font-weight: 700; color: #555; white-space: normal; line-height: 1.2; vertical-align: bottom; }
+    td small { display: block; color: #888; font-size: 11px; }
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <b>Demo gradebook for testing the OnTrack extension.</b> This page copies the layout of a Skyward
+    "Student Grades" page and contains made-up classes and grades — no real student data.
+    Click the OnTrack extension icon, then <b>Send to OnTrack</b>.
+  </div>
+  <main>
+    <h2>STUDENT GRADES</h2>
+    <h3>DEMO HIGH SCHOOL · STUDENT SECTIONS</h3>
+    <div class="grid">
+      <!-- Same structure as Skyward: header table, frozen "Class" column, grades table, frozen names -->
+      <div id="StudentGrades-demo_unlockedHeader">
+        <table class="fillWidth"><colgroup><col style="width:240px"><col style="width:90px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:0"></colgroup><tr>
+          <th>Class</th><th title="Missing assignments">Missing</th><th>T1</th><th>CZ1</th><th>T2</th><th>CZ2</th><th>SE1</th><th>S1</th>
+          <th>T3</th><th>CZ3</th><th>T4</th><th>CZ4</th><th>SE2</th><th>S2</th><th></th>
+        </tr></table>
+      </div>
+      <div id="StudentGrades-demo_lockedHeader"><table class="lockedHeader" style="display:none"><tr><th>Class</th></tr></table></div>
+      <div id="StudentGrades-demo_unlockedBody">
+        <table class="unlockedBrowseTable"><colgroup><col style="width:240px"><col style="width:90px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:0"></colgroup>
+          <tr><td>AP BIOLOGY<small>Period 1 · Demo Teacher</small></td><td></td><td>96</td><td>S</td><td>93</td><td></td><td></td><td>94</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>ENGLISH III HONORS<small>Period 2 · Demo Teacher</small></td><td>1</td><td>88</td><td>S</td><td>91</td><td></td><td></td><td>90</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>ALGEBRA II<small>Period 3 · Demo Teacher</small></td><td></td><td>84</td><td>S</td><td>79</td><td></td><td></td><td>81</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>US HISTORY<small>Period 4 · Demo Teacher</small></td><td></td><td>91</td><td>E</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>LUNCH</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>SPANISH II<small>Period 6 · Demo Teacher</small></td><td></td><td>97</td><td>S</td><td>98</td><td></td><td></td><td>98</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </table>
+      </div>
+      <div id="StudentGrades-demo_lockedBody" style="display:none"><table class="lockedBrowseTable"><tr><td>AP BIOLOGY</td></tr></table></div>
+    </div>
+  </main>
+</body>
+</html>

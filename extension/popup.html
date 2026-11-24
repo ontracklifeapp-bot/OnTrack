@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>OnTrack</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <img src="icons/icon-32.png" alt="" width="24" height="24" />
+    <strong>OnTrack</strong>
+  </header>
+
+  <p id="status" class="muted">Reading this page…</p>
+  <ul id="preview" hidden></ul>
+
+  <button id="send" hidden>Send to OnTrack</button>
+
+  <p class="fine">🔒 Reads only the grades on this tab, only when you click. Never your password.</p>
+
+  <label class="dev">
+    <input type="checkbox" id="pastYears" /> Re-import everything (past years &amp; earlier quarters)
+  </label>
+  <label class="dev">
+    <input type="checkbox" id="useLocal" /> Send to local test copy (localhost:8081)
+  </label>
+
+  <script src="extract.js"></script>
+  <script src="shared.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

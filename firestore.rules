@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // Optional text field: if present it must be a string no longer than max
+    function optText(d, field, max) {
+      return !(field in d) || (d[field] is string && d[field].size() <= max);
+    }
+
+    function optBool(d, field) {
+      return !(field in d) || d[field] is bool;
+    }
+
+    // Shared shape checks for tasks, bills, homework, reminders, subjects and payments
+    function validItem(d) {
+      return d.keys().size() <= 25
+        && optText(d, 'name', 200)
+        && optText(d, 'taskName', 200)
+        && optText(d, 'subject', 100)
+        && optText(d, 'notes', 5000)
+        && optText(d, 'dueDate', 40)
+        && optText(d, 'date', 40)
+        && optText(d, 'time', 20)
+        && optText(d, 'repeat', 100)
+        && optText(d, 'icon', 16)
+        && optBool(d, 'done')
+        && optBool(d, 'paid')
+        && (!('terms' in d) || (d.terms is map && d.terms.size() <= 12))
+        && (!('prevTerms' in d) || (d.prevTerms is map && d.prevTerms.size() <= 12))
+        && optText(d, 'year', 20)
+        && (!('assignments' in d) || (d.assignments is list && d.assignments.size() <= 200))
+        && (!('categories' in d) || (d.categories is list && d.categories.size() <= 20))
+        && (!('quarters' in d) || (d.quarters is map && d.quarters.size() <= 4))
+        && (!('order' in d) || (d.order is int && d.order >= 0 && d.order < 1000))
+        && (!('multiplier' in d) || (d.multiplier is number && d.multiplier >= 1 && d.multiplier <= 2))
+        && (!('weightClass' in d) || d.weightClass in ['ap', 'dual', 'onramps', 'honors', 'regular'])
+        && (!('amount' in d) || (d.amount is number && d.amount >= 0 && d.amount < 100000000));
+    }
+
+    // users/{uid}: settings for the daily email. The app may only set emailReminders and
+    // timeZone; lastSentDay / lastTestAt are written by the server (which bypasses these rules).
+    match /users/{userId} {
+      allow read, delete: if isOwner(userId);
+      allow create: if isOwner(userId)
+        && request.resource.data.keys().hasOnly(['emailReminders', 'timeZone', 'gradebook'])
+        && optBool(request.resource.data, 'emailReminders')
+        && optText(request.resource.data, 'timeZone', 64)
+        && (!('gradebook' in request.resource.data) || request.resource.data.gradebook in ['skyward', 'hac']);
+      allow update: if isOwner(userId)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['emailReminders', 'timeZone', 'gradebook'])
+        && optBool(request.resource.data, 'emailReminders')
+        && optText(request.resource.data, 'timeZone', 64)
+        && (!('gradebook' in request.resource.data) || request.resource.data.gradebook in ['skyward', 'hac']);
+
+      // Each user's own lists. Unknown collections can still be read/deleted (e.g. old "grades")
+      // but not written.
+      match /{collection}/{docId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && collection in ['tasks', 'bills', 'homework', 'reminders', 'subjects', 'payments', 'grades']
+          && validItem(request.resource.data);
+      }
+    }
+  }
+}

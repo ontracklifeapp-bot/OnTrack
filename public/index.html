@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="%LANG_ISO_CODE%">
+  <head>
+    <meta charset="utf-8" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>%WEB_TITLE%</title>
+    <meta name="description" content="Tasks, bills, homework and reminders in one place — with a heads-up before anything is due. Free." />
+    <!-- Old Firebase addresses → ontracklife.app (keeps the path, e.g. /tasks). Runs before the app loads.
+         Calendar feed links (/ical/…) never reach this page — Hosting sends them to the calendarFeed function. -->
+    <script>
+      (function () {
+        var h = location.hostname;
+        if (h === "your-project-id.web.app" || h === "your-project-id.firebaseapp.com") {
+          location.replace("https://ontracklife.app" + location.pathname + location.search + location.hash);
+        }
+      })();
+    </script>
+    <!-- Grades from the OnTrack extension arrive as #grades=… — keep them in this tab's
+         sessionStorage (so signing in doesn't lose them) and clear them from the address bar -->
+    <script>
+      (function () {
+        var m = location.hash.match(/^#grades=([A-Za-z0-9_-]{1,500000})$/);
+        if (!m) return;
+        try { sessionStorage.setItem("ontrackPendingGrades", m[1]); } catch (e) {}
+        history.replaceState(null, "", location.pathname + location.search);
+      })();
+    </script>
+    <link rel="canonical" href="https://ontracklife.app/" />
+    <!-- Link previews (iMessage, Discord, Instagram, X…) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="OnTrack" />
+    <meta property="og:title" content="OnTrack — Stay on top of everything" />
+    <meta property="og:description" content="Tasks, bills, homework and reminders in one place — with a heads-up before anything is due. Free." />
+    <meta property="og:url" content="https://ontracklife.app/" />
+    <meta property="og:image" content="https://ontracklife.app/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="OnTrack — Stay on top of everything. Tasks, bills, homework, reminders." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="OnTrack — Stay on top of everything" />
+    <meta name="twitter:description" content="Tasks, bills, homework and reminders in one place — with a heads-up before anything is due." />
+    <meta name="twitter:image" content="https://ontracklife.app/og-image.jpg" />
+    <!-- Sharp icons for browser tabs and bookmarks -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <!-- Installable app ("Add to Home Screen" / "Install OnTrack") -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0d0d1a" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="OnTrack" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
+    <style id="expo-reset">
+      /* These styles make the body full-height */
+      html,
+      body {
+        height: 100%;
+        /* Match the app (dark by default; the app updates this for light mode) so Safari's
+           toolbar, notch and bounce-scroll areas never show a white bar */
+        background-color: #0d0d1a;
+      }
+      /* Size to the *visible* screen on phones (excludes Safari's sliding toolbars) */
+      @supports (height: 100dvh) {
+        html, body, #root { height: 100dvh; }
+      }
+      /* These styles disable body scrolling if you are using <ScrollView> */
+      body {
+        overflow: hidden;
+      }
+      /* These styles make the root element full-height */
+      #root {
+        display: flex;
+        height: 100%;
+        flex: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Use static rendering with Expo Router to support running without JavaScript. -->
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <!-- The root element for your Expo app. -->
+    <div id="root"></div>
+  </body>
+</html>

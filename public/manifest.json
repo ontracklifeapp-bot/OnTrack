@@ -1,0 +1,14 @@
+{
+  "short_name": "OnTrack",
+  "name": "OnTrack",
+  "description": "Keep track of tasks, bills, homework and reminders.",
+  "icons": [
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#0d0d1a",
+  "background_color": "#0d0d1a"
+}
